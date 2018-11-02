@@ -1,12 +1,12 @@
 # encoding: utf-8
 
-RSpec.describe TTY::Prompt, 'confirmation' do
+RSpec.describe TTY::Prompt, "confirmation" do
 
   subject(:prompt) { TTY::TestPrompt.new }
 
-  context '#yes?' do
-    it 'agrees with question' do
-      prompt.input << 'yes'
+  context "#yes?" do
+    it "agrees with question" do
+      prompt.input << "yes"
       prompt.input.rewind
       expect(prompt.yes?("Are you a human?")).to eq(true)
       expect(prompt.output.string).to eq([
@@ -19,8 +19,8 @@ RSpec.describe TTY::Prompt, 'confirmation' do
       ].join)
     end
 
-    it 'disagrees with question' do
-      prompt.input << 'no'
+    it "disagrees with question" do
+      prompt.input << "no"
       prompt.input.rewind
       expect(prompt.yes?("Are you a human?")).to eq(false)
       expect(prompt.output.string).to eq([
@@ -32,7 +32,7 @@ RSpec.describe TTY::Prompt, 'confirmation' do
       ].join)
     end
 
-    it 'assumes default true' do
+    it "assumes default true" do
       prompt.input << "\r"
       prompt.input.rewind
       expect(prompt.yes?("Are you a human?")).to eq(true)
@@ -44,7 +44,7 @@ RSpec.describe TTY::Prompt, 'confirmation' do
       ].join)
     end
 
-    it 'changes default' do
+    it "changes default" do
       prompt.input << "\n"
       prompt.input.rewind
       expect(prompt.yes?("Are you a human?", default: false)).to eq(false)
@@ -60,8 +60,8 @@ RSpec.describe TTY::Prompt, 'confirmation' do
       prompt.input << "Nope\n"
       prompt.input.rewind
       result = prompt.yes?("Are you a human?") do |q|
-        q.positive 'Yup'
-        q.negative 'nope'
+        q.positive "Yup"
+        q.negative "nope"
       end
       expect(result).to eq(false)
       expect(prompt.output.string).to eq([
@@ -80,7 +80,7 @@ RSpec.describe TTY::Prompt, 'confirmation' do
       prompt.input << "Nope\n"
       prompt.input.rewind
       result = prompt.yes?("Are you a human?") do |q|
-        q.suffix 'Yup/nope'
+        q.suffix "Yup/nope"
       end
       expect(result).to eq(false)
       expect(prompt.output.string).to eq([
@@ -114,8 +114,8 @@ RSpec.describe TTY::Prompt, 'confirmation' do
     it "customizes question through options" do
       prompt.input << "\r"
       prompt.input.rewind
-      result = prompt.yes?("Are you a human?", suffix: 'Agree/Disagree',
-                            positive: 'Agree', negative: 'Disagree')
+      result = prompt.yes?("Are you a human?", suffix: "Agree/Disagree",
+                            positive: "Agree", negative: "Disagree")
       expect(result).to eq(true)
       expect(prompt.output.string).to eq([
         "Are you a human? \e[90m(Agree/Disagree)\e[0m ",
@@ -130,9 +130,9 @@ RSpec.describe TTY::Prompt, 'confirmation' do
       prompt.input.rewind
       conversion = proc { |input| !input.match(/^agree$/i).nil? }
       result = prompt.yes?("Are you a human?") do |q|
-                 q.suffix 'Agree/Disagree'
-                 q.positive 'Agree'
-                 q.negative 'Disagree'
+                 q.suffix "Agree/Disagree"
+                 q.positive "Agree"
+                 q.negative "Disagree"
                  q.convert conversion
                end
       expect(result).to eq(false)
@@ -153,9 +153,9 @@ RSpec.describe TTY::Prompt, 'confirmation' do
     end
   end
 
-  context '#no?' do
-    it 'agrees with question' do
-      prompt.input << 'no'
+  context "#no?" do
+    it "agrees with question" do
+      prompt.input << "no"
       prompt.input.rewind
       expect(prompt.no?("Are you a human?")).to eq(true)
       expect(prompt.output.string).to eq([
@@ -167,8 +167,8 @@ RSpec.describe TTY::Prompt, 'confirmation' do
       ].join)
     end
 
-    it 'disagrees with question' do
-      prompt.input << 'yes'
+    it "disagrees with question" do
+      prompt.input << "yes"
       prompt.input.rewind
       expect(prompt.no?("Are you a human?")).to eq(false)
       expect(prompt.output.string).to eq([
@@ -181,7 +181,7 @@ RSpec.describe TTY::Prompt, 'confirmation' do
       ].join)
     end
 
-    it 'assumes default false' do
+    it "assumes default false" do
       prompt.input << "\r"
       prompt.input.rewind
       expect(prompt.no?("Are you a human?")).to eq(true)
@@ -193,7 +193,7 @@ RSpec.describe TTY::Prompt, 'confirmation' do
       ].join)
     end
 
-    it 'changes default' do
+    it "changes default" do
       prompt.input << "\r"
       prompt.input.rewind
       expect(prompt.no?("Are you a human?", default: true)).to eq(false)
@@ -209,8 +209,8 @@ RSpec.describe TTY::Prompt, 'confirmation' do
       prompt.input << "Yup\n"
       prompt.input.rewind
       result = prompt.no?("Are you a human?") do |q|
-        q.positive 'yup'
-        q.negative 'Nope'
+        q.positive "yup"
+        q.negative "Nope"
       end
       expect(result).to eq(false)
       expect(prompt.output.string).to eq([
@@ -229,9 +229,9 @@ RSpec.describe TTY::Prompt, 'confirmation' do
       prompt.input.rewind
       conversion = proc { |input| !input.match(/^agree$/i).nil? }
       result = prompt.no?("Are you a human?") do |q|
-                 q.suffix 'Agree/Disagree'
-                 q.positive 'Agree'
-                 q.negative 'Disagree'
+                 q.suffix "Agree/Disagree"
+                 q.positive "Agree"
+                 q.negative "Disagree"
                  q.convert conversion
                end
       expect(result).to eq(false)
